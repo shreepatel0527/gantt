@@ -54,5 +54,8 @@
     ],
     "sideEffects": [
         "*.css"
-    ]
+    ],
+    "dependencies": {
+        "frappe-gantt": "^1.2.2"
+    }
 }

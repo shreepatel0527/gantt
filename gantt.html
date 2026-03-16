@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Project Gantt</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.umd.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.css" />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 28px 36px;
+      background: #f0f2f5;
+    }
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 0 0 20px 0;
+      color: #1a1a2e;
+      letter-spacing: 0.3px;
+    }
+    #gantt-wrapper {
+      max-width: 1920px;
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 22px 28px 28px;
+      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.11);
+      overflow-x: auto;
+    }
+    /* Bump up font sizes inside the frappe-gantt SVG */
+    .gantt .bar-label {
+      font-size: 13px !important;
+      font-family: Arial, sans-serif !important;
+    }
+    .gantt .lower-text {
+      font-size: 12px !important;
+      font-family: Arial, sans-serif !important;
+    }
+    .gantt .upper-text {
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      font-family: Arial, sans-serif !important;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Project Timeline</h2>
+  <div id="gantt-wrapper">
+    <div id="gantt"></div>
+  </div>
+
+  <script>
+    const tasks = [
+      { name: "Team Communication Setup (TEAM)", start: "2026-01-13", end: "2026-01-24" },
+      { name: "Course Kickoff (TEAM)", start: "2026-01-15", end: "2026-01-15" },
+
+      { name: "Sponsor Kickoff & Requirements Intake (TEAM)", start: "2026-01-17", end: "2026-02-03" },
+      { name: "Project Scope & Charter Drafting (TEAM)", start: "2026-01-20", end: "2026-01-31" },
+      { name: "Validation Strategy & Requirements Alignment (KN)", start: "2026-01-22", end: "2026-02-07" },
+      { name: "MVP Architecture Sketch v1 (SS)", start: "2026-01-22", end: "2026-01-29" },
+      { name: "Documentation Framework Setup (BT)", start: "2026-01-24", end: "2026-02-07" },
+      { name: "Customer Discovery Outreach (SS)", start: "2026-01-29", end: "2026-02-07" },
+
+      { name: "MVP Schema, Metrics & Config Planning (SS)", start: "2026-02-10", end: "2026-02-17" },
+      { name: "Test Runner & Execution Setup (BT)", start: "2026-02-10", end: "2026-02-17" },
+      { name: "UI Foundations & Streamlit Setup (SP)", start: "2026-02-10", end: "2026-02-17" },
+      { name: "Flash Demo #1 (TEAM)", start: "2026-02-10", end: "2026-02-10" },
+
+      { name: "Release Planning & Architecture Decisions (BT)", start: "2026-02-17", end: "2026-02-23" },
+      { name: "Config Authoring & Validation Planning (KN)", start: "2026-02-17", end: "2026-02-23" },
+      { name: "UI Scaffolding for Release (SP)", start: "2026-02-17", end: "2026-02-23" },
+      { name: "Documentation & Repo Preparation (TEAM)", start: "2026-02-17", end: "2026-02-23" },
+
+      { name: "Backend Runner & Storage Enhancements (BT)", start: "2026-02-23", end: "2026-03-06" },
+      { name: "Validation Metrics Integration (KN)", start: "2026-02-23", end: "2026-03-06" },
+      { name: "UI Architecture & Core Components (SP)", start: "2026-02-23", end: "2026-03-06" },
+      { name: "Code Review & Quality Improvements (TEAM)", start: "2026-02-23", end: "2026-03-06" },
+      { name: "Milestone Review #1 (TEAM)", start: "2026-02-24", end: "2026-02-24" },
+
+      { name: "Demo UI Enhancements & Stability (SP)", start: "2026-03-06", end: "2026-03-10" },
+      { name: "Release Notes & Demo Packaging (BT)", start: "2026-03-06", end: "2026-03-10" },
+      { name: "System Integration for Demo (SS)", start: "2026-03-06", end: "2026-03-10" },
+      { name: "Post-Demo UI & Visualization Refinements (SS)", start: "2026-03-09", end: "2026-03-10" },
+      { name: "Flash Demo #2 (TEAM)", start: "2026-03-10", end: "2026-03-10" },
+
+      { name: "Architecture Freeze (TEAM)", start: "2026-03-10", end: "2026-03-13" },
+
+      { name: "Milestone II Planning & Tracking (SP)", start: "2026-03-13", end: "2026-03-16" },
+      { name: "Backend Baseline Establishment (KN)", start: "2026-03-13", end: "2026-03-16" },
+      { name: "Advanced UI Interaction Features (SP)", start: "2026-03-13", end: "2026-03-16" },
+      { name: "Batch Jobs & Workflow UX (SS)", start: "2026-03-13", end: "2026-03-16" },
+
+      { name: "Endgame System Configuration Completion (BT)", start: "2026-03-13", end: "2026-03-18" },
+      { name: "Metrics Versioning & Data Robustness (BT)", start: "2026-03-13", end: "2026-03-18" },
+      { name: "Full UI Feature Completion (SP)", start: "2026-03-13", end: "2026-03-18" },
+      { name: "Run Analysis & Annotation Capabilities (SS)", start: "2026-03-13", end: "2026-03-18" },
+      { name: "Visualization Enhancements & Baselines (KN)", start: "2026-03-13", end: "2026-03-18" },
+      { name: "Settings & User Configuration Features (SP)", start: "2026-03-13", end: "2026-03-18" },
+
+      { name: "API Stabilization & Integration Testing (KN)", start: "2026-03-17", end: "2026-03-24" },
+      { name: "Internal Test Runs (KN)", start: "2026-03-17", end: "2026-03-24" },
+
+      { name: "Validation Workflow Implementation (KN)", start: "2026-03-18", end: "2026-03-24" },
+      { name: "Validation Error Surfacing (BT)", start: "2026-03-18", end: "2026-03-24" },
+
+      { name: "Sponsor Validation Cycle (TEAM)", start: "2026-03-18", end: "2026-04-01" },
+      { name: "Milestone Review #2 (TEAM)", start: "2026-03-31", end: "2026-03-31" },
+
+      { name: "Sponsor Testing Fixes & Error Improvements (KN)", start: "2026-03-31", end: "2026-04-07" },
+      { name: "Test Coverage & YAML Validation Improvements (KN)", start: "2026-03-31", end: "2026-04-07" },
+      { name: "Flash Demo #3 (TEAM)", start: "2026-04-07", end: "2026-04-07" },
+
+      { name: "Runner & System Refinement (SS)", start: "2026-04-01", end: "2026-04-14" },
+      { name: "Parser & Metrics Refinement (KN)", start: "2026-04-01", end: "2026-04-14" },
+      { name: "UI/UX Refinement (SP)", start: "2026-04-01", end: "2026-04-14" },
+      { name: "Documentation Polish (BT)", start: "2026-04-01", end: "2026-04-14" },
+
+      { name: "MVP Code Freeze (TEAM)", start: "2026-04-07", end: "2026-04-14" },
+      { name: "Architecture Review Recording (TEAM)", start: "2026-04-07", end: "2026-04-14" },
+
+      { name: "Final Deliverables Preparation (TEAM)", start: "2026-04-14", end: "2026-04-28" },
+      { name: "Repository Cleanup & Release Preparation (BT)", start: "2026-04-14", end: "2026-04-28" },
+      { name: "Milestone Review #3 (TEAM)", start: "2026-04-21", end: "2026-04-21" },
+
+      { name: "Final Capstone Presentation (TEAM)", start: "2026-05-05", end: "2026-05-05" }
+    ];
+
+    new Gantt("#gantt", tasks, {
+      view_mode: 'Week',
+      bar_height: 13,
+      bar_padding: 4,
+      column_width: 110,
+      header_height: 50,
+    });
+  </script>
+</body>
+</html>
